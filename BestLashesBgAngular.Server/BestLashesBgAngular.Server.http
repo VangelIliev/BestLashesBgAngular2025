@@ -1,0 +1,6 @@
+@BestLashesBgAngular.Server_HostAddress = http://localhost:5296
+
+GET {{BestLashesBgAngular.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
