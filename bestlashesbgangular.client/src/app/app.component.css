@@ -1,14 +1,25 @@
 ﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fde6f2 0%, #fff6fb 60%, #ffffff 100%);
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.2rem, 4vw, 3rem);
 }
 
-table {
-    margin: 0 auto;
+.app-content {
+  flex: 1;
+  padding: clamp(1rem, 4vw, 2.5rem) clamp(0.75rem, 4vw, 3rem);
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .app-content {
+    padding-bottom: 3rem;
+  }
 }

@@ -1,0 +1,83 @@
+<section class="promo-package">
+  <header class="promo-package__intro">
+    <p class="promo-package__eyebrow">Избери своя мечтан пакет</p>
+    <h1 class="promo-package__title">Промо пакет „Ден и Нощ“</h1>
+    <p class="promo-package__subtitle">
+      Два магнетични стила в една луксозна кутия – нежно „ден“ излъчване и дръзка „нощ“ визия, готови за поставяне за под 5 минути.
+    </p>
+  </header>
+
+  <div class="promo-package__hero">
+    <div class="promo-package__media">
+      <ng-container *ngIf="promoVideoSrc; else mediaPlaceholder">
+        <video
+          class="promo-package__video"
+          [poster]="promoVideoPoster"
+          [src]="promoVideoSrc"
+          autoplay
+          muted
+          loop
+          playsinline
+          controls
+          preload="auto"
+        ></video>
+      </ng-container>
+    </div>
+
+    <aside class="promo-package__card">
+      <img
+        class="promo-package__card-image"
+        [src]="productImage"
+        alt="Промо пакет Best Lashes BG"
+        loading="lazy"
+      />
+      <div class="promo-package__price-bubble">
+        <span class="price">69 лв</span>
+        <span class="note">включва два комплекта</span>
+      </div>
+      <a routerLink="/shopping-basket" [queryParams]="{ add: 'promo-pack' }" class="promo-package__cta">Поръчай сега</a>
+      <p class="promo-package__smallprint">Безплатна доставка при поръчка над 99 лв</p>
+    </aside>
+  </div>
+
+  <section class="promo-package__details">
+    <article class="promo-package__section">
+      <h2 class="promo-package__section-title">Какво има вътре?</h2>
+      <ul class="promo-package__list">
+        <li *ngFor="let item of whatsInside">{{ item }}</li>
+      </ul>
+    </article>
+
+    <article class="promo-package__section">
+      <h2 class="promo-package__section-title">Два комплекта, две настроения</h2>
+      <div class="promo-package__split">
+        <div class="promo-package__stack">
+          <h3>{{ daySection.title }}</h3>
+          <ul class="promo-package__list promo-package__list--bullets">
+            <li *ngFor="let item of daySection.items">{{ item }}</li>
+          </ul>
+        </div>
+        <div class="promo-package__stack">
+          <h3>{{ nightSection.title }}</h3>
+          <ul class="promo-package__list promo-package__list--bullets">
+            <li *ngFor="let item of nightSection.items">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="promo-package__section promo-package__section--accent">
+      <h2 class="promo-package__section-title">Защо ще го заобичаш</h2>
+      <ul class="promo-package__pills">
+        <li *ngFor="let perk of perks">{{ perk }}</li>
+      </ul>
+    </article>
+  </section>
+</section>
+
+<ng-template #mediaPlaceholder>
+  <div class="promo-package__placeholder">
+    <span>Добавете видео файл (mp4) в папка <code>assets/videos/</code> или подменете URL в компонента.</span>
+  </div>
+</ng-template>
+

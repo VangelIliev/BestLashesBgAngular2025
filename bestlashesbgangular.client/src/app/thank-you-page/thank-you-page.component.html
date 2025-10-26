@@ -1,1 +1,70 @@
-<p>thank-you-page works!</p>
+<section class="thank-you">
+  <div class="thank-you__glow thank-you__glow--one"></div>
+  <div class="thank-you__glow thank-you__glow--two"></div>
+
+  <div class="thank-you__card">
+    <div class="thank-you__header">
+      <div class="thank-you__badge" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+          <circle cx="32" cy="32" r="31" />
+          <path d="M20 32l7.5 7.8L44 24" />
+        </svg>
+      </div>
+      <p class="thank-you__eyebrow">Поръчка приета</p>
+      <h1 class="thank-you__title">Благодарим ти за доверието!</h1>
+      <p class="thank-you__subtitle">
+        Ще се свържем с теб, за да потвърдим детайлите и да подготвим пратката ти с любов.
+      </p>
+    </div>
+
+    <ng-container *ngIf="hasOrder; else emptyOrder">
+      <section class="thank-you__summary">
+        <h2>Обобщение на поръчката</h2>
+        <ul class="thank-you__items">
+          <li *ngFor="let item of order?.items" class="thank-you__item">
+            <div>
+              <p class="thank-you__item-name">{{ item.name }}</p>
+              <p class="thank-you__item-meta">Количество: {{ item.quantity }} × {{ formatCurrency(item.unitPrice) }}</p>
+            </div>
+            <span class="thank-you__item-total">{{ formatCurrency(item.totalPrice) }}</span>
+          </li>
+        </ul>
+
+        <div class="thank-you__totals">
+          <div class="thank-you__totals-row">
+            <span>Междинна сума</span>
+            <span>{{ formatCurrency(order?.subtotal || 0) }}</span>
+          </div>
+          <div class="thank-you__totals-row" *ngIf="(order?.discountValue || 0) > 0">
+            <span>Отстъпка</span>
+            <span class="thank-you__totals-discount">− {{ formatCurrency(order?.discountValue || 0) }}</span>
+          </div>
+          <div class="thank-you__totals-row">
+            <span>Доставка</span>
+            <span>{{ order?.shipping === 0 ? 'Безплатно' : formatCurrency(order?.shipping || 0) }}</span>
+          </div>
+          <div class="thank-you__totals-divider"></div>
+          <div class="thank-you__totals-row thank-you__totals-row--total">
+            <span>Общо</span>
+            <span>{{ formatCurrency(order?.total || 0) }}</span>
+          </div>
+          <div class="thank-you__badge-code" *ngIf="order?.discountCode">
+            Използван код: <strong>{{ order?.discountCode }}</strong>
+          </div>
+        </div>
+      </section>
+    </ng-container>
+
+    <footer class="thank-you__footer">
+      <button type="button" class="thank-you__primary" (click)="goHome()">Върни се към началната страница</button>
+      <p class="thank-you__note">Обичаме да те правим още по-красива. Очаквай поръчката си до 2 работни дни.</p>
+    </footer>
+  </div>
+</section>
+
+<ng-template #emptyOrder>
+  <section class="thank-you__summary thank-you__summary--empty">
+    <h2>Нямаме запазена поръчка</h2>
+    <p>Изглежда, че количката е празна. Върни се на началната страница и добави любимите си продукти.</p>
+  </section>
+</ng-template>

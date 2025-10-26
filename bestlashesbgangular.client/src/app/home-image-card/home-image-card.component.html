@@ -1,1 +1,62 @@
-<p>home-image-card works!</p>
+<section class="home-packages">
+  <header class="home-packages__intro">
+    <p class="home-packages__eyebrow">Избери своя мечтан пакет</p>
+    <h1 class="home-packages__title">Best Lashes BG</h1>
+  </header>
+
+  <div class="package-grid">
+    <article class="package-card" *ngFor="let pkg of packages">
+      <div class="package-card__top">
+        <h2 class="package-card__name">{{ pkg.name }}</h2>
+        <span class="package-card__price">{{ pkg.price }}</span>
+      </div>
+
+      <ng-container *ngIf="pkg.link; else imageOnly">
+        <a
+          class="package-card__media"
+          [class.package-card__media--placeholder]="!pkg.image"
+          [routerLink]="pkg.link"
+        >
+          <ng-container *ngIf="pkg.image; else placeholder">
+            <img
+              [src]="pkg.image"
+              [alt]="pkg.imageAlt || pkg.name"
+              loading="lazy"
+              (error)="onImageError(pkg)"
+            />
+          </ng-container>
+        </a>
+      </ng-container>
+
+      <ng-template #imageOnly>
+        <div
+          class="package-card__media"
+          [class.package-card__media--placeholder]="!pkg.image"
+        >
+          <ng-container *ngIf="pkg.image; else placeholder">
+            <img
+              [src]="pkg.image"
+              [alt]="pkg.imageAlt || pkg.name"
+              loading="lazy"
+              (error)="onImageError(pkg)"
+            />
+          </ng-container>
+        </div>
+      </ng-template>
+
+      <ng-template #placeholder>
+        <span class="package-card__placeholder">Добавете изображение</span>
+      </ng-template>
+
+      <p class="package-card__description">{{ pkg.description }}</p>
+
+      <a *ngIf="pkg.link" class="package-card__cta" [routerLink]="pkg.link">
+        <span>{{ pkg.ctaLabel || 'Виж повече' }}</span>
+        <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path d="M5 12h14" />
+          <path d="M13 6l6 6-6 6" />
+        </svg>
+      </a>
+    </article>
+  </div>
+</section>

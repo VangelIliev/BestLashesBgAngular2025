@@ -9,12 +9,12 @@ import { FooterComponent } from './footer/footer.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { ReviewCardComponent } from './review-card/review-card.component';
 import { HomeImageCardComponent } from './home-image-card/home-image-card.component';
-import { LashesComponent } from './lashes/lashes.component';
-import { LashComponent } from './lash/lash.component';
 import { ShoppingBasketComponent } from './shopping-basket/shopping-basket.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ThankYouPageComponent } from './thank-you-page/thank-you-page.component';
+import { PromoPackageComponent } from './promo-package/promo-package.component';
+import { HomeLashPackageComponent } from './home-lash-package/home-lash-package.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +24,12 @@ import { ThankYouPageComponent } from './thank-you-page/thank-you-page.component
     ReviewsComponent,
     ReviewCardComponent,
     HomeImageCardComponent,
-    LashesComponent,
-    LashComponent,
     ShoppingBasketComponent,
     ContactsComponent,
     AboutUsComponent,
-    ThankYouPageComponent
+    ThankYouPageComponent,
+    PromoPackageComponent,
+    HomeLashPackageComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

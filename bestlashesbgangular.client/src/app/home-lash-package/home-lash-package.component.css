@@ -1,0 +1,311 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.lash-kit {
+  display: grid;
+  gap: clamp(2.2rem, 5vw, 4rem);
+  padding: clamp(2rem, 6vw, 4rem);
+  border-radius: clamp(2rem, 5vw, 3.4rem);
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.82) 0%, rgba(243, 202, 230, 0.45) 38%, rgba(237, 188, 222, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 32px 70px rgba(150, 32, 92, 0.12);
+}
+
+.lash-kit__intro {
+  text-align: center;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.lash-kit__eyebrow {
+  margin: 0;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #b03f82;
+}
+
+.lash-kit__title {
+  margin: 0;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  color: #2b0f24;
+}
+
+.lash-kit__subtitle {
+  margin: 0 auto;
+  max-width: 680px;
+  font-size: clamp(1rem, 2.4vw, 1.1rem);
+  line-height: 1.7;
+  color: rgba(43, 15, 36, 0.78);
+}
+
+.lash-kit__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(2rem, 5vw, 3rem);
+  align-items: start;
+}
+
+.lash-kit__media {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.1rem);
+}
+
+.lash-kit__video,
+.lash-kit__placeholder {
+  width: 100%;
+  border-radius: clamp(1.4rem, 3vw, 2.4rem);
+  box-shadow: 0 24px 54px rgba(150, 32, 92, 0.16);
+  background: transparent;
+}
+
+.lash-kit__placeholder {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.lash-kit__video {
+  background: transparent;
+}
+
+.lash-kit__placeholder {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  text-align: center;
+  color: rgba(43, 15, 36, 0.6);
+  letter-spacing: 0.06em;
+}
+
+.lash-kit__details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1rem, 3vw, 1.8rem);
+}
+
+.lash-kit__detail-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: clamp(1.2rem, 3vw, 2rem);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 18px 36px rgba(150, 32, 92, 0.12);
+}
+
+.lash-kit__detail-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.1rem, 2.8vw, 1.3rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lash-kit__detail-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.55rem;
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  color: rgba(43, 15, 36, 0.8);
+}
+
+.lash-kit__variants {
+  position: sticky;
+  top: clamp(1rem, 5vw, 2rem);
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.2rem);
+  background: rgba(255, 255, 255, 0.78);
+  padding: clamp(1.5rem, 3.2vw, 2.4rem);
+  border-radius: clamp(1.6rem, 3vw, 2.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 26px 56px rgba(150, 32, 92, 0.16);
+}
+
+.lash-kit__variants-title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lash-kit__variant-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.lash-kit__variant-item {
+  display: block;
+}
+
+.lash-kit__variant-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.lash-kit__variant-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(150, 32, 92, 0.18);
+}
+
+.lash-kit__variant-button.is-active {
+  border-color: rgba(176, 63, 130, 0.4);
+  box-shadow: 0 16px 30px rgba(150, 32, 92, 0.2);
+}
+
+.lash-kit__variant-button img {
+  width: 3.1rem;
+  height: 3.1rem;
+  object-fit: cover;
+  border-radius: 1.1rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.lash-kit__variant-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  border: 2px solid rgba(176, 63, 130, 0.5);
+  transition: background 0.2s ease;
+}
+
+.lash-kit__variant-button.is-active .lash-kit__variant-dot {
+  background: linear-gradient(135deg, #ff9bcd 0%, #f65bb0 100%);
+  border-color: transparent;
+}
+
+.lash-kit__variant-name {
+  justify-self: start;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.lash-kit__variant-preview {
+  display: grid;
+  gap: 1rem;
+  text-align: center;
+}
+
+.lash-kit__variant-preview img {
+  width: 100%;
+  border-radius: clamp(1.2rem, 2.6vw, 2rem);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.lash-kit__variant-info {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.lash-kit__note {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(43, 15, 36, 0.6);
+}
+
+.lash-kit__variant-info h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+}
+
+.lash-kit__variant-info p {
+  margin: 0;
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  color: rgba(43, 15, 36, 0.75);
+}
+
+.lash-kit__price-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lash-kit__price {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff9bcd 0%, #f65bb0 100%);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 26px rgba(246, 91, 176, 0.28);
+}
+
+
+.lash-kit__cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f65bb0 0%, #b03f82 100%);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.65rem 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  box-shadow: 0 18px 32px rgba(150, 32, 92, 0.26);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lash-kit__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 36px rgba(150, 32, 92, 0.3);
+}
+
+.lash-kit__cta:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1080px) {
+  .lash-kit__main {
+    grid-template-columns: 1fr;
+  }
+
+  .lash-kit__variants {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .lash-kit {
+    padding: clamp(1.6rem, 8vw, 2.4rem);
+    border-radius: 1.8rem;
+  }
+
+  .lash-kit__variant-button {
+    grid-template-columns: auto 1fr;
+  }
+
+  .lash-kit__variant-button img {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  .lash-kit__variant-dot {
+    display: none;
+  }
+}
+

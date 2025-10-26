@@ -1,1 +1,128 @@
-<p>shopping-basket works!</p>
+<section class="basket" [class.basket--empty]="!hasItems">
+  <header class="basket__header">
+    <p class="basket__eyebrow">Твоята количка</p>
+    <h1 class="basket__title">Готова за перфектен поглед</h1>
+    <p class="basket__subtitle" *ngIf="hasItems">
+      Потвърди поръчката си, добави код за отстъпка и завърши визията си с Best Lashes BG.
+    </p>
+  </header>
+
+  <div class="basket__content" *ngIf="hasItems; else emptyState">
+    <div class="basket__items">
+      <article class="basket-item" *ngFor="let item of items">
+        <div class="basket-item__tag" *ngIf="item.tag">{{ item.tag }}</div>
+        <div class="basket-item__media">
+          <img [src]="item.image" [alt]="item.name" loading="lazy" />
+        </div>
+        <div class="basket-item__body">
+          <div class="basket-item__head">
+            <div>
+              <h3 class="basket-item__name">{{ item.name }}</h3>
+              <p class="basket-item__subtitle">{{ item.subtitle }}</p>
+            </div>
+            <button type="button" class="basket-item__remove" (click)="removeItem(item.id)">
+              Премахни
+            </button>
+          </div>
+
+          <div class="basket-item__footer">
+            <div class="basket-item__quantity">
+              <button type="button" aria-label="Намали количество" (click)="adjustQuantity(item, -1)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button type="button" aria-label="Увеличи количество" (click)="adjustQuantity(item, 1)">+</button>
+            </div>
+            <div class="basket-item__price">{{ item.price * item.quantity | number: '1.2-2' }} лв</div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <aside class="basket__summary">
+      <div class="basket-card">
+        <h2 class="basket-card__title">Резюме</h2>
+
+        <div class="basket-card__progress" *ngIf="shipping > 0">
+          <div class="basket-card__progress-track">
+            <div class="basket-card__progress-fill" [style.width.%]="progressToFreeShipping"></div>
+          </div>
+          <p class="basket-card__progress-text">
+            Остават {{ (freeShippingThreshold - subtotal) | number: '1.2-2' }} лв до безплатна доставка.
+          </p>
+        </div>
+        <p class="basket-card__progress-text basket-card__progress-text--success" *ngIf="shipping === 0">
+          Ура! Достигна безплатна доставка над {{ freeShippingThreshold }} лв.
+        </p>
+
+        <div class="basket-card__row">
+          <span>Междинна сума</span>
+          <span>{{ subtotal | number: '1.2-2' }} лв</span>
+        </div>
+
+        <div class="basket-card__row">
+          <span>Отстъпка</span>
+          <span class="basket-card__value--discount">− {{ discountValue | number: '1.2-2' }} лв</span>
+        </div>
+
+        <div class="basket-card__row">
+          <span>Доставка</span>
+          <span *ngIf="shipping === 0" class="basket-card__value--accent">Безплатно</span>
+          <span *ngIf="shipping > 0">{{ shipping | number: '1.2-2' }} лв</span>
+        </div>
+
+        <div class="basket-card__divider"></div>
+
+        <div class="basket-card__row basket-card__row--total">
+          <span>Общо</span>
+          <span>{{ total | number: '1.2-2' }} лв</span>
+        </div>
+
+        <div class="basket-card__discount">
+          <label for="discount-code">Имаш код за отстъпка?</label>
+          <div class="basket-card__discount-input">
+            <input
+              id="discount-code"
+              type="text"
+              #discountInput
+              placeholder="Въведи код"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button type="button" (click)="applyDiscount(discountInput.value)">Активирай</button>
+          </div>
+          <p
+            class="basket-card__discount-message"
+            [class.basket-card__discount-message--success]="discountState === 'success'"
+            [class.basket-card__discount-message--error]="discountState === 'error'"
+            *ngIf="discountMessage"
+          >
+            {{ discountMessage }}
+            <button
+              type="button"
+              class="basket-card__discount-clear"
+              *ngIf="discountState === 'success'"
+              (click)="clearDiscount()"
+            >
+              Премахни
+            </button>
+          </p>
+        </div>
+
+        <div class="basket-card__actions">
+          <a routerLink="/home" class="basket-card__link">← Продължи да пазаруваш</a>
+          <button type="button" class="basket-card__primary" (click)="checkout()" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Обработваме...' : 'Завърши поръчката' }}
+          </button>
+        </div>
+        <p class="basket-card__legal">Плащане при доставка · 100% гаранция за качество</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<ng-template #emptyState>
+  <div class="basket-empty">
+    <h2>Количката е празна</h2>
+    <p>Добави любимите си продукти и се върни тук, за да финализираш поръчката.</p>
+    <a routerLink="/home" class="basket-empty__cta">Разгледай продуктите</a>
+  </div>
+</ng-template>

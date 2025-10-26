@@ -1,0 +1,74 @@
+<section class="lash-kit">
+  <header class="lash-kit__intro">
+    <p class="lash-kit__eyebrow">Миглопластика вкъщи</p>
+    <h1 class="lash-kit__title">Комплект за професионален резултат у дома</h1>
+    <p class="lash-kit__subtitle">
+      Всичко необходимо, за да постигнеш салонно излъчване без да напускаш дома си – от снопчета в различни дължини до лепило, запечатващ гел и аксесоари.
+    </p>
+  </header>
+
+  <div class="lash-kit__main">
+    <div class="lash-kit__media">
+      <ng-container *ngIf="demoVideoSrc; else demoPlaceholder">
+        <video
+          class="lash-kit__video"
+          [poster]="demoVideoPoster"
+          [src]="demoVideoSrc"
+          autoplay
+          muted
+          loop
+          playsinline
+          controls
+          preload="auto"
+        ></video>
+      </ng-container>
+
+      <div class="lash-kit__details">
+        <article *ngFor="let detail of kitDetails" class="lash-kit__detail-card">
+          <h2>{{ detail.title }}</h2>
+          <ul>
+            <li *ngFor="let item of detail.items">{{ item }}</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <aside class="lash-kit__variants">
+      <h2 class="lash-kit__variants-title">Избери модела на снопчета</h2>
+      <ul class="lash-kit__variant-list">
+        <li *ngFor="let variant of variants" class="lash-kit__variant-item">
+          <button
+            type="button"
+            class="lash-kit__variant-button"
+            [class.is-active]="variant === activeVariant"
+            (click)="selectVariant(variant)"
+          >
+            <span class="lash-kit__variant-dot" aria-hidden="true"></span>
+            <img [src]="variant.image" [alt]="variant.name" loading="lazy" />
+            <span class="lash-kit__variant-name">{{ variant.name }}</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="lash-kit__variant-preview" *ngIf="activeVariant">
+        <img [src]="activeVariant.image" [alt]="activeVariant.name" loading="lazy" />
+        <div class="lash-kit__variant-info">
+          <h3>{{ activeVariant.name }}</h3>
+          <p>{{ activeVariant.description }}</p>
+          <div class="lash-kit__price-row">
+            <span class="lash-kit__price">69 лв</span>
+            <a routerLink="/shopping-basket" [queryParams]="{ add: 'home-kit' }" class="lash-kit__cta">Поръчай</a>
+          </div>
+          <p class="lash-kit__note">Безплатна доставка при поръчка над 99 лв</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<ng-template #demoPlaceholder>
+  <div class="lash-kit__placeholder">
+    <span>Добавете видео във <code>assets/videos/home-lash-kit.mp4</code> или променете пътя в компонента.</span>
+  </div>
+</ng-template>
+

@@ -1,1 +1,64 @@
-<p>header works!</p>
+<header class="site-header" [class.menu-open]="isMenuOpen">
+  <div class="site-header__inner">
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Toggle navigation"
+      aria-controls="site-nav"
+      [attr.aria-expanded]="isMenuOpen"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="site-nav" class="main-nav" [class.open]="isMenuOpen">
+      <a
+        routerLink="/home"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+        (click)="closeMenu()"
+      >
+        Начало
+      </a>
+      <a
+        routerLink="/reviews"
+        routerLinkActive="active"
+        class="nav-link"
+        (click)="closeMenu()"
+      >
+        Отзиви
+      </a>
+    </nav>
+
+    <a routerLink="/home" class="brand" aria-label="Best Lashes BG home">
+      <span class="brand-word">BEST</span>
+      <span class="brand-emblem" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="presentation" focusable="false">
+          <circle cx="32" cy="32" r="30" class="brand-emblem__ring" />
+          <path d="M12 34c8-12 32-12 40 0" class="brand-emblem__upper" />
+          <path d="M12 34c8 10 32 10 40 0" class="brand-emblem__lower" />
+          <circle cx="32" cy="34" r="6" class="brand-emblem__iris" />
+          <circle cx="32" cy="34" r="3" class="brand-emblem__pupil" />
+          <path d="M18 26l-4-7M24 24l-2-7M32 22v-8M40 24l2-7M46 26l4-7" class="brand-emblem__lashes" />
+        </svg>
+      </span>
+      <span class="brand-word brand-word--accent">LASHES BG</span>
+    </a>
+
+    <a
+      routerLink="/shopping-basket"
+      class="cart-link"
+      aria-label="Пазарска количка"
+      (click)="closeMenu()"
+    >
+      <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+        <path d="M3 5h2l2.4 10.2a1 1 0 0 0 .98.8h8.78a1 1 0 0 0 .97-.757L20 7H6" />
+        <circle cx="10" cy="19" r="1.4" />
+        <circle cx="17" cy="19" r="1.4" />
+      </svg>
+    </a>
+  </div>
+</header>
