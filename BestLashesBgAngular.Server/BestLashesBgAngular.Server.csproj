@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <SpaRoot>..\bestlashesbgangular.client</SpaRoot>
@@ -20,6 +20,7 @@
     <ProjectReference Include="..\bestlashesbgangular.client\bestlashesbgangular.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\BestLashesBgAngular.Domain\BestLashesBgAngular.Domain.csproj" />
   </ItemGroup>
 
 </Project>

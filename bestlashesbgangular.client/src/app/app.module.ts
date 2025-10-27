@@ -1,13 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { ReviewsComponent } from './reviews/reviews.component';
-import { ReviewCardComponent } from './review-card/review-card.component';
 import { HomeImageCardComponent } from './home-image-card/home-image-card.component';
 import { ShoppingBasketComponent } from './shopping-basket/shopping-basket.component';
 import { ContactsComponent } from './contacts/contacts.component';
@@ -21,8 +20,6 @@ import { HomeLashPackageComponent } from './home-lash-package/home-lash-package.
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ReviewsComponent,
-    ReviewCardComponent,
     HomeImageCardComponent,
     ShoppingBasketComponent,
     ContactsComponent,
@@ -32,7 +29,9 @@ import { HomeLashPackageComponent } from './home-lash-package/home-lash-package.
     HomeLashPackageComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

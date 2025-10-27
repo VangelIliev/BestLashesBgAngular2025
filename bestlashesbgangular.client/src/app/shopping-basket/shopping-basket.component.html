@@ -38,20 +38,8 @@
     </div>
 
     <aside class="basket__summary">
-      <div class="basket-card">
+      <form class="basket-card" [formGroup]="checkoutForm" novalidate (ngSubmit)="checkout()">
         <h2 class="basket-card__title">Резюме</h2>
-
-        <div class="basket-card__progress" *ngIf="shipping > 0">
-          <div class="basket-card__progress-track">
-            <div class="basket-card__progress-fill" [style.width.%]="progressToFreeShipping"></div>
-          </div>
-          <p class="basket-card__progress-text">
-            Остават {{ (freeShippingThreshold - subtotal) | number: '1.2-2' }} лв до безплатна доставка.
-          </p>
-        </div>
-        <p class="basket-card__progress-text basket-card__progress-text--success" *ngIf="shipping === 0">
-          Ура! Достигна безплатна доставка над {{ freeShippingThreshold }} лв.
-        </p>
 
         <div class="basket-card__row">
           <span>Междинна сума</span>
@@ -63,18 +51,129 @@
           <span class="basket-card__value--discount">− {{ discountValue | number: '1.2-2' }} лв</span>
         </div>
 
-        <div class="basket-card__row">
-          <span>Доставка</span>
-          <span *ngIf="shipping === 0" class="basket-card__value--accent">Безплатно</span>
-          <span *ngIf="shipping > 0">{{ shipping | number: '1.2-2' }} лв</span>
-        </div>
-
         <div class="basket-card__divider"></div>
 
         <div class="basket-card__row basket-card__row--total">
           <span>Общо</span>
           <span>{{ total | number: '1.2-2' }} лв</span>
         </div>
+
+        <div class="basket-card__divider"></div>
+
+        <section class="basket-card__section">
+          <h3 class="basket-card__section-title">Данни за доставка</h3>
+          <div class="basket-card__form-grid">
+            <div class="basket-card__field">
+              <label class="basket-card__label" for="firstName">Име</label>
+              <input
+                id="firstName"
+                type="text"
+                autocomplete="given-name"
+                formControlName="firstName"
+                class="basket-card__input"
+                [class.basket-card__input--invalid]="getControl('firstName').invalid && getControl('firstName').touched"
+                [attr.aria-invalid]="getControl('firstName').invalid"
+                [attr.aria-describedby]="getControl('firstName').invalid ? 'firstName-error' : null"
+              />
+              <span
+                *ngIf="getControl('firstName').invalid && getControl('firstName').touched"
+                class="basket-card__field-error"
+                id="firstName-error"
+              >
+                {{ getControl('firstName').errors?.['required'] ? 'Моля, въведи име.' : 'Името трябва да е поне 2 букви.' }}
+              </span>
+            </div>
+
+            <div class="basket-card__field">
+              <label class="basket-card__label" for="lastName">Фамилия</label>
+              <input
+                id="lastName"
+                type="text"
+                autocomplete="family-name"
+                formControlName="lastName"
+                class="basket-card__input"
+                [class.basket-card__input--invalid]="getControl('lastName').invalid && getControl('lastName').touched"
+                [attr.aria-invalid]="getControl('lastName').invalid"
+                [attr.aria-describedby]="getControl('lastName').invalid ? 'lastName-error' : null"
+              />
+              <span
+                *ngIf="getControl('lastName').invalid && getControl('lastName').touched"
+                class="basket-card__field-error"
+                id="lastName-error"
+              >
+                {{ getControl('lastName').errors?.['required'] ? 'Моля, въведи фамилия.' : 'Фамилията трябва да е поне 2 букви.' }}
+              </span>
+            </div>
+
+            <div class="basket-card__field basket-card__field--full">
+              <label class="basket-card__label" for="phone">Телефон</label>
+              <input
+                id="phone"
+                type="tel"
+                autocomplete="tel"
+                inputmode="tel"
+                formControlName="phone"
+                class="basket-card__input"
+                [class.basket-card__input--invalid]="getControl('phone').invalid && getControl('phone').touched"
+                [attr.aria-invalid]="getControl('phone').invalid"
+                [attr.aria-describedby]="getControl('phone').invalid ? 'phone-error' : null"
+                placeholder="Пример: 0888123456 или +359888123456"
+              />
+              <span
+                *ngIf="getControl('phone').invalid && getControl('phone').touched"
+                class="basket-card__field-error"
+                id="phone-error"
+              >
+                {{ getControl('phone').errors?.['required'] ? 'Моля, въведи телефон.' : 'Телефонът трябва да започва с 0 или +359 и да съдържа 10 цифри.' }}
+              </span>
+            </div>
+
+            <div class="basket-card__field basket-card__field--full">
+              <label class="basket-card__label" for="deliveryMethod">Метод на доставка</label>
+              <select
+                id="deliveryMethod"
+                formControlName="deliveryMethod"
+                class="basket-card__select"
+                [class.basket-card__input--invalid]="getControl('deliveryMethod').invalid && getControl('deliveryMethod').touched"
+                [attr.aria-invalid]="getControl('deliveryMethod').invalid"
+                [attr.aria-describedby]="getControl('deliveryMethod').invalid ? 'deliveryMethod-error' : null"
+              >
+                <option *ngFor="let option of deliveryOptions" [value]="option.value">{{ option.label }}</option>
+              </select>
+              <span
+                *ngIf="getControl('deliveryMethod').invalid && getControl('deliveryMethod').touched"
+                class="basket-card__field-error"
+                id="deliveryMethod-error"
+              >
+                Моля, избери предпочитан метод на доставка.
+              </span>
+            </div>
+
+            <div class="basket-card__field basket-card__field--full">
+              <label class="basket-card__label" for="deliveryAddress">
+                {{ selectedDeliveryMethod === 'personal-address' ? 'Адрес за доставка' : 'Избран офис на Еконт' }}
+              </label>
+              <input
+                id="deliveryAddress"
+                type="text"
+                formControlName="deliveryAddress"
+                class="basket-card__input basket-card__input--wide"
+                [class.basket-card__input--invalid]="getControl('deliveryAddress').invalid && getControl('deliveryAddress').touched"
+                [attr.aria-invalid]="getControl('deliveryAddress').invalid"
+                [attr.aria-describedby]="getControl('deliveryAddress').invalid ? 'deliveryAddress-error' : null"
+                [placeholder]="deliveryAddressPlaceholder"
+                autocomplete="off"
+              />
+              <span
+                *ngIf="getControl('deliveryAddress').invalid && getControl('deliveryAddress').touched"
+                class="basket-card__field-error"
+                id="deliveryAddress-error"
+              >
+                Полето е задължително. Моля, опиши пълния адрес или желания офис.
+              </span>
+            </div>
+          </div>
+        </section>
 
         <div class="basket-card__discount">
           <label for="discount-code">Имаш код за отстъпка?</label>
@@ -107,14 +206,16 @@
           </p>
         </div>
 
+        <p class="basket-card__error" *ngIf="checkoutError">{{ checkoutError }}</p>
+
         <div class="basket-card__actions">
           <a routerLink="/home" class="basket-card__link">← Продължи да пазаруваш</a>
-          <button type="button" class="basket-card__primary" (click)="checkout()" [disabled]="isSubmitting">
+          <button type="submit" class="basket-card__primary" [disabled]="isSubmitting">
             {{ isSubmitting ? 'Обработваме...' : 'Завърши поръчката' }}
           </button>
         </div>
         <p class="basket-card__legal">Плащане при доставка · 100% гаранция за качество</p>
-      </div>
+      </form>
     </aside>
   </div>
 </section>

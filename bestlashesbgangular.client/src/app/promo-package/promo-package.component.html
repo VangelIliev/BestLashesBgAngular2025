@@ -13,14 +13,17 @@
         <video
           class="promo-package__video"
           [poster]="promoVideoPoster"
-          [src]="promoVideoSrc"
           autoplay
           muted
           loop
           playsinline
           controls
-          preload="auto"
-        ></video>
+          preload="metadata"
+        >
+          <source [attr.src]="promoVideoSrc" type="video/mp4" />
+          Вашият браузър не поддържа HTML5 видео. Моля, изтеглете файла от
+          <a [href]="promoVideoSrc">тук</a>.
+        </video>
       </ng-container>
     </div>
 

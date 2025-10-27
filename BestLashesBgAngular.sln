@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bestlashesbgangular.client", "bestlashesbgangular.client\bestlashesbgangular.client.esproj", "{E55AB2E1-C87F-1BC8-4DB4-9E0B73663691}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestLashesBgAngular.Server", "BestLashesBgAngular.Server\BestLashesBgAngular.Server.csproj", "{E247A47C-6D1D-407B-8155-7E6B5BDAD337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestLashesBgAngular.Domain", "BestLashesBgAngular.Domain\BestLashesBgAngular.Domain.csproj", "{02A96552-177B-4123-90AB-FAD433D13BA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{E247A47C-6D1D-407B-8155-7E6B5BDAD337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E247A47C-6D1D-407B-8155-7E6B5BDAD337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E247A47C-6D1D-407B-8155-7E6B5BDAD337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A96552-177B-4123-90AB-FAD433D13BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A96552-177B-4123-90AB-FAD433D13BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A96552-177B-4123-90AB-FAD433D13BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A96552-177B-4123-90AB-FAD433D13BA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

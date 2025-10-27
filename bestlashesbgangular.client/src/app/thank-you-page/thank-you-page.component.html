@@ -39,10 +39,6 @@
             <span>Отстъпка</span>
             <span class="thank-you__totals-discount">− {{ formatCurrency(order?.discountValue || 0) }}</span>
           </div>
-          <div class="thank-you__totals-row">
-            <span>Доставка</span>
-            <span>{{ order?.shipping === 0 ? 'Безплатно' : formatCurrency(order?.shipping || 0) }}</span>
-          </div>
           <div class="thank-you__totals-divider"></div>
           <div class="thank-you__totals-row thank-you__totals-row--total">
             <span>Общо</span>
@@ -51,6 +47,23 @@
           <div class="thank-you__badge-code" *ngIf="order?.discountCode">
             Използван код: <strong>{{ order?.discountCode }}</strong>
           </div>
+        </div>
+
+        <div class="thank-you__customer" *ngIf="order?.customer">
+          <h3 class="thank-you__customer-title">Данни за доставка</h3>
+          <p class="thank-you__customer-name">{{ customerFullName }}</p>
+          <p class="thank-you__customer-detail">
+            <span>Телефон:</span>
+            <a class="thank-you__customer-link" [href]="'tel:' + order?.customer?.phoneNumber">{{ order?.customer?.phoneNumber }}</a>
+          </p>
+          <p class="thank-you__customer-detail">
+            <span>Метод:</span>
+            {{ deliveryMethodLabel(order?.customer?.deliveryMethod) }}
+          </p>
+          <p class="thank-you__customer-detail" *ngIf="order?.customer?.deliveryAddress">
+            <span>{{ deliveryAddressLabel(order?.customer?.deliveryMethod) }}:</span>
+            {{ order?.customer?.deliveryAddress }}
+          </p>
         </div>
       </section>
     </ng-container>

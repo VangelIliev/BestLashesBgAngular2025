@@ -13,14 +13,17 @@
         <video
           class="lash-kit__video"
           [poster]="demoVideoPoster"
-          [src]="demoVideoSrc"
           autoplay
           muted
           loop
           playsinline
           controls
-          preload="auto"
-        ></video>
+          preload="metadata"
+        >
+          <source [attr.src]="demoVideoSrc" type="video/mp4" />
+          Вашият браузър не поддържа HTML5 видео. Моля, изтеглете файла от
+          <a [href]="demoVideoSrc">тук</a>.
+        </video>
       </ng-container>
 
       <div class="lash-kit__details">
@@ -57,7 +60,13 @@
           <p>{{ activeVariant.description }}</p>
           <div class="lash-kit__price-row">
             <span class="lash-kit__price">69 лв</span>
-            <a routerLink="/shopping-basket" [queryParams]="{ add: 'home-kit' }" class="lash-kit__cta">Поръчай</a>
+            <a
+              routerLink="/shopping-basket"
+              [queryParams]="{ add: activeVariant.id }"
+              class="lash-kit__cta"
+            >
+              Поръчай
+            </a>
           </div>
           <p class="lash-kit__note">Безплатна доставка при поръчка над 99 лв</p>
         </div>
