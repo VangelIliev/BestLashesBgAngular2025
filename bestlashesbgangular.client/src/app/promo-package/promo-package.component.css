@@ -114,8 +114,25 @@
   box-shadow: 0 18px 32px rgba(246, 91, 176, 0.28);
 }
 
+.promo-package__price-bubble .price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.promo-package__price-bubble .old-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.9);
+}
+
 .promo-package__price-bubble .price {
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }

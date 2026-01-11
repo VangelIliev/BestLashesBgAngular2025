@@ -17,6 +17,7 @@ interface CustomerDetails {
   phoneNumber: string;
   deliveryMethod: DeliveryMethod;
   deliveryAddress: string;
+  isDataProcessingConsented: boolean;
 }
 
 interface OrderSummary {
@@ -65,7 +66,7 @@ export class ThankYouPageComponent implements OnInit {
   }
 
   formatCurrency(value: number): string {
-    return `${value.toFixed(2)} лв`;
+    return `${value.toFixed(2)} €`;
   }
 
   deliveryMethodLabel(method?: DeliveryMethod): string {

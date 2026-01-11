@@ -77,14 +77,15 @@ namespace BestLashesBgAngular.Domain.Services.Implementation
             var sb = new StringBuilder();
 
             sb.AppendLine("Нова поръчка от Best Lashes BG");
-            if (!string.IsNullOrWhiteSpace(model.OrderId))
-            {
-                sb.AppendLine($"Номер на поръчка: {model.OrderId}");
-            }
+            // if (!string.IsNullOrWhiteSpace(model.OrderId))
+            // {
+            //     sb.AppendLine($"Номер на поръчка: {model.OrderId}");
+            // }
             sb.AppendLine(new string('-', 50));
             sb.AppendLine("Клиент");
             sb.AppendLine($"Име: {model.Customer.FirstName} {model.Customer.LastName}".Trim());
             sb.AppendLine($"Телефон: {model.Customer.PhoneNumber}");
+            sb.AppendLine($"Промо код : \"{model.DiscountCode ?? ""}\"");
 
             var deliveryLabel = model.Customer.DeliveryMethod switch
             {
@@ -94,6 +95,7 @@ namespace BestLashesBgAngular.Domain.Services.Implementation
             };
             sb.AppendLine($"Метод на доставка: {deliveryLabel}");
             sb.AppendLine($"Адрес / Офис: {model.Customer.DeliveryAddress}");
+            sb.AppendLine($"Съгласие за обработка на данни: {(model.Customer.IsDataProcessingConsented ? "Да" : "Не")}");
 
             sb.AppendLine();
             sb.AppendLine("Продукти:");
@@ -104,10 +106,16 @@ namespace BestLashesBgAngular.Domain.Services.Implementation
 
             sb.AppendLine();
             sb.AppendLine($"Междинна сума: {model.Subtotal.ToString("F2", _culture)} лв");
-            if (model.DiscountValue > 0)
-            {
-                sb.AppendLine($"Отстъпка: -{model.DiscountValue.ToString("F2", _culture)} лв" + (string.IsNullOrWhiteSpace(model.DiscountCode) ? string.Empty : $" (код: {model.DiscountCode})"));
-            }
+            // var hasDiscountCode = !string.IsNullOrWhiteSpace(model.DiscountCode);
+            // sb.AppendLine($"Код за отстъпка: {(hasDiscountCode ? model.DiscountCode : "няма")}");
+            // if (model.DiscountValue > 0)
+            // {
+            //     sb.AppendLine($"Отстъпка: -{model.DiscountValue.ToString("F2", _culture)} лв" + (string.IsNullOrWhiteSpace(model.DiscountCode) ? string.Empty : $" (код: {model.DiscountCode})"));
+            // }
+            // else if (hasDiscountCode)
+            // {
+            //     sb.AppendLine("Отстъпката не беше приложена (стойност 0.00 лв).");
+            // }
             sb.AppendLine($"Общо за плащане: {model.Total.ToString("F2", _culture)} лв");
 
             sb.AppendLine();
@@ -120,8 +128,8 @@ namespace BestLashesBgAngular.Domain.Services.Implementation
         {
             var fullName = $"{model.Customer.FirstName} {model.Customer.LastName}".Trim();
             var customerName = string.IsNullOrWhiteSpace(fullName) ? "клиент" : fullName;
-            var orderInfo = string.IsNullOrWhiteSpace(model.OrderId) ? string.Empty : $" №{model.OrderId}";
-            return $"Нова поръчка{orderInfo} от {customerName}";
+            // var orderInfo = string.IsNullOrWhiteSpace(model.OrderId) ? string.Empty : $" №{model.OrderId}";
+            return $"Нова поръчка от {customerName}";
         }
     }
 }

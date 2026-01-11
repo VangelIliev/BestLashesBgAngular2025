@@ -8,7 +8,10 @@
     <article class="package-card" *ngFor="let pkg of packages">
       <div class="package-card__top">
         <h2 class="package-card__name">{{ pkg.name }}</h2>
-        <span class="package-card__price">{{ pkg.price }}</span>
+        <div class="package-card__price-badge">
+          <span *ngIf="pkg.oldPrice" class="package-card__old-price">{{ pkg.oldPrice }}</span>
+          <span class="package-card__price">{{ pkg.price }}</span>
+        </div>
       </div>
 
       <ng-container *ngIf="pkg.link; else imageOnly">

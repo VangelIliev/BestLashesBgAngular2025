@@ -31,6 +31,8 @@ namespace BestLashesBgAngular.Domain.Models
         public string DeliveryMethod { get; set; } = string.Empty;
 
         public string DeliveryAddress { get; set; } = string.Empty;
+
+        public bool IsDataProcessingConsented { get; set; }
     }
 
     public class BasketItemModel

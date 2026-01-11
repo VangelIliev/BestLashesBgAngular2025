@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 
 interface LashVariant {
   id: string;
@@ -18,7 +18,11 @@ interface KitDetail {
   templateUrl: './home-lash-package.component.html',
   styleUrl: './home-lash-package.component.css'
 })
-export class HomeLashPackageComponent {
+export class HomeLashPackageComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('demoVideo') demoVideo?: ElementRef<HTMLVideoElement>;
+  private removeInteractionListener?: () => void;
+
+  constructor(private readonly renderer: Renderer2) {}
   readonly demoVideoSrc = 'https://res.cloudinary.com/dl6dp2cr0/video/upload/v1761427399/Migloplastic_oghxpg.mp4';
   readonly demoVideoPoster = 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1761428362/Summer_Collection_1_o2pjun.jpg';
 
@@ -43,15 +47,15 @@ export class HomeLashPackageComponent {
     },
     {
       id: 'home-kit-natural',
-      name: 'Естествена Колекция',
-      description: 'Нежен ефект "косъм по косъм", 10-12 мм',
-      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1761428362/Summer_Collection_1_o2pjun.jpg'
+      name: 'Коледна Колекция',
+      description: 'Средна дължина и средна гъстота, 10-12-14 мм',
+      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1765273209/viber_image_2025-12-09_11-27-09-778_odfnl5.jpg'
     },
     {
       id: 'home-kit-mega',
-      name: '6D Мега обем',
+      name: 'МЕГА обем, МЕГА гъстота',
       description: 'Супер гъсти и пухкави с D извивка, 8-16 мм',
-      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1761428115/6d_vzjyok.jpg'
+      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1762081030/viber_image_2025-11-02_12-01-00-060_tltu0w.jpg'
     }
   ];
 
@@ -81,6 +85,49 @@ export class HomeLashPackageComponent {
 
   selectVariant(variant: LashVariant): void {
     this.activeVariant = variant;
+  }
+
+  ngAfterViewInit(): void {
+    const videoElement = this.demoVideo?.nativeElement;
+    if (!videoElement) {
+      return;
+    }
+
+    const tryEnableAudio = () => this.enableVideoAudio(videoElement);
+
+    if (videoElement.readyState >= 2) {
+      tryEnableAudio();
+    } else {
+      const onCanPlay = () => {
+        tryEnableAudio();
+        videoElement.removeEventListener('loadeddata', onCanPlay);
+      };
+      videoElement.addEventListener('loadeddata', onCanPlay);
+    }
+
+    this.removeInteractionListener = this.renderer.listen('window', 'pointerdown', () => {
+      tryEnableAudio();
+      this.removeInteractionListener?.();
+      this.removeInteractionListener = undefined;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.removeInteractionListener?.();
+  }
+
+  private enableVideoAudio(video: HTMLVideoElement): void {
+    if (!video || video.muted === false) {
+      return;
+    }
+
+    video.muted = false;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.catch(() => {
+        video.muted = true;
+      });
+    }
   }
 }
 

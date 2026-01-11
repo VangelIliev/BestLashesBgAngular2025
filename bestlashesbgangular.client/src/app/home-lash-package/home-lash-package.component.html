@@ -59,7 +59,9 @@
           <h3>{{ activeVariant.name }}</h3>
           <p>{{ activeVariant.description }}</p>
           <div class="lash-kit__price-row">
-            <span class="lash-kit__price">69 лв</span>
+            <div class="lash-kit__price-container">
+              <span class="lash-kit__price">35 €</span>
+            </div>
             <a
               routerLink="/shopping-basket"
               [queryParams]="{ add: activeVariant.id }"
@@ -68,7 +70,7 @@
               Поръчай
             </a>
           </div>
-          <p class="lash-kit__note">Безплатна доставка при поръчка над 99 лв</p>
+          <p class="lash-kit__note">Безплатна доставка при поръчка над 50 €</p>
         </div>
       </div>
     </aside>

@@ -31,7 +31,7 @@
               <span>{{ item.quantity }}</span>
               <button type="button" aria-label="Увеличи количество" (click)="adjustQuantity(item, 1)">+</button>
             </div>
-            <div class="basket-item__price">{{ item.price * item.quantity | number: '1.2-2' }} лв</div>
+            <div class="basket-item__price">{{ item.price * item.quantity | number: '1.2-2' }} €</div>
           </div>
         </div>
       </article>
@@ -43,19 +43,19 @@
 
         <div class="basket-card__row">
           <span>Междинна сума</span>
-          <span>{{ subtotal | number: '1.2-2' }} лв</span>
+          <span>{{ subtotal | number: '1.2-2' }} €</span>
         </div>
 
         <div class="basket-card__row">
           <span>Отстъпка</span>
-          <span class="basket-card__value--discount">− {{ discountValue | number: '1.2-2' }} лв</span>
+          <span class="basket-card__value--discount">− {{ discountValue | number: '1.2-2' }} €</span>
         </div>
 
         <div class="basket-card__divider"></div>
 
         <div class="basket-card__row basket-card__row--total">
           <span>Общо</span>
-          <span>{{ total | number: '1.2-2' }} лв</span>
+          <span>{{ total | number: '1.2-2' }} €</span>
         </div>
 
         <div class="basket-card__divider"></div>
@@ -176,7 +176,7 @@
         </section>
 
         <div class="basket-card__discount">
-          <label for="discount-code">Имаш код за отстъпка?</label>
+          <label for="discount-code">Промо код</label>
           <div class="basket-card__discount-input">
             <input
               id="discount-code"
@@ -185,8 +185,15 @@
               placeholder="Въведи код"
               autocomplete="off"
               spellcheck="false"
+              [disabled]="discountState === 'success'"
+              [value]="appliedDiscount?.code || ''"
             />
-            <button type="button" (click)="applyDiscount(discountInput.value)">Активирай</button>
+            <button 
+              type="button" 
+              (click)="applyDiscount(discountInput.value)"
+              [disabled]="discountState === 'success'">
+              Активирай
+            </button>
           </div>
           <p
             class="basket-card__discount-message"
@@ -199,11 +206,29 @@
               type="button"
               class="basket-card__discount-clear"
               *ngIf="discountState === 'success'"
-              (click)="clearDiscount()"
+              (click)="clearDiscount(); discountInput.value = ''"
             >
               Премахни
             </button>
           </p>
+        </div>
+
+        <div
+          class="basket-card__consent"
+          [class.basket-card__consent--invalid]="getControl('gdprConsent').invalid && getControl('gdprConsent').touched"
+        >
+          <label class="basket-card__consent-label">
+            <input type="checkbox" formControlName="gdprConsent" />
+            <span>
+              Съгласен/на съм личните ми данни да бъдат обработени за целите на изпълнение на поръчката, съгласно политиката за поверителност.
+            </span>
+          </label>
+          <span
+            *ngIf="getControl('gdprConsent').invalid && getControl('gdprConsent').touched"
+            class="basket-card__field-error"
+          >
+            Моля, потвърди съгласието за обработка на лични данни.
+          </span>
         </div>
 
         <p class="basket-card__error" *ngIf="checkoutError">{{ checkoutError }}</p>

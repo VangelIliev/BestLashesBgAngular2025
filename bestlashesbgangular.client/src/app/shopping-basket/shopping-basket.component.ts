@@ -29,6 +29,7 @@ interface CustomerDetails {
   phoneNumber: string;
   deliveryMethod: DeliveryMethod;
   deliveryAddress: string;
+  isDataProcessingConsented: boolean;
 }
 
 type CheckoutFormValue = {
@@ -37,6 +38,7 @@ type CheckoutFormValue = {
   phone: string;
   deliveryMethod: DeliveryMethod;
   deliveryAddress: string;
+  gdprConsent: boolean;
 };
 
 interface OrderPayload {
@@ -63,8 +65,8 @@ interface OrderPayload {
 export class ShoppingBasketComponent implements OnInit, OnDestroy {
 
   readonly discounts: DiscountDefinition[] = [
-    { code: 'LASHES10', label: '-10% за нови клиенти', percent: 10 },
-    { code: 'BESTGIRL5', label: '-5 лв благодарствен ваучер', amount: 5 }
+    { code: 'NEW10', percent: 10 },
+    { code: 'CHRISTMAS10', percent: 10 }
   ];
 
   readonly deliveryOptions: Array<{ value: DeliveryMethod; label: string }> = [
@@ -90,14 +92,14 @@ export class ShoppingBasketComponent implements OnInit, OnDestroy {
       id: 'promo-pack',
       name: 'Промо пакет „Ден и Нощ“',
       subtitle: 'Два чифта магнитни мигли + 2 линии и апликатор',
-      price: 69,
+      price: 35,
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761412141/Best_Lashes_Cover_Image__oipyfg.jpg'
     },
     'home-kit-classic': {
       id: 'home-kit-classic',
       name: 'Комплект „Миглопластика вкъщи“ — Класически',
       subtitle: 'Перфектен за ежедневие, 8-16 мм',
-      price: 69,
+      price: 35,
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761428114/Chocolate_Collection_1_bxvie6.jpg',
       tag: 'Най-продаван'
     },
@@ -105,29 +107,29 @@ export class ShoppingBasketComponent implements OnInit, OnDestroy {
       id: 'home-kit-hybrid',
       name: 'Комплект „Миглопластика вкъщи“ — Хибриден',
       subtitle: 'Комбинация от класически и обемни снопчета',
-      price: 69,
+      price: 35,
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761428114/Natural_Migloplastic_2025_kupkmc.jpg'
     },
     'home-kit-foxy': {
       id: 'home-kit-foxy',
       name: 'Комплект „Миглопластика вкъщи“ — Фокси',
       subtitle: 'Ефект „очна линия“, L изивка',
-      price: 69,
+      price: 35,
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761428114/Fox_1_j02zw3.jpg'
     },
     'home-kit-natural': {
       id: 'home-kit-natural',
-      name: 'Комплект „Миглопластика вкъщи“ — Естествен',
-      subtitle: 'Нежен ефект „косъм по косъм“, 10-12 мм',
-      price: 69,
-      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761428362/Summer_Collection_1_o2pjun.jpg'
+      name: 'Коледна Колекция',
+      subtitle: 'Средна дължина и средна гъстота, 10-12-14 мм',
+      price: 35,
+      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/v1765273209/viber_image_2025-12-09_11-27-09-778_odfnl5.jpg'
     },
     'home-kit-mega': {
       id: 'home-kit-mega',
-      name: 'Комплект „Миглопластика вкъщи“ — 6D Мега обем',
+      name: 'Комплект „Миглопластика вкъщи“ — МЕГА обем, МЕГА гъстота',
       subtitle: 'Супер гъсти и пухкави с D извивка, 8-16 мм',
-      price: 69,
-      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1761428115/6d_vzjyok.jpg'
+      price: 35,
+      image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_420,h_420,c_fill,q_auto,f_auto/v1762081030/viber_image_2025-11-02_12-01-00-060_tltu0w.jpg'
     }
   };
 
@@ -289,7 +291,8 @@ export class ShoppingBasketComponent implements OnInit, OnDestroy {
       lastName: [stored?.lastName ?? '', [Validators.required, Validators.minLength(2)]],
       phone: [stored?.phone ?? '', [Validators.required, Validators.pattern(this.phonePattern)]],
       deliveryMethod: [stored?.deliveryMethod ?? this.deliveryOptions[0].value, Validators.required],
-      deliveryAddress: [stored?.deliveryAddress ?? '', [Validators.required, Validators.minLength(6)]]
+      deliveryAddress: [stored?.deliveryAddress ?? '', [Validators.required, Validators.minLength(6)]],
+      gdprConsent: [stored?.gdprConsent ?? false, Validators.requiredTrue]
     });
 
     const valueChangesSub = this.checkoutForm.valueChanges.subscribe((value) => {
@@ -325,7 +328,8 @@ export class ShoppingBasketComponent implements OnInit, OnDestroy {
       lastName: value.lastName.trim(),
       phoneNumber: this.sanitizePhone(value.phone),
       deliveryMethod: value.deliveryMethod,
-      deliveryAddress: this.sanitizeAddress(value.deliveryAddress)
+      deliveryAddress: this.sanitizeAddress(value.deliveryAddress),
+      isDataProcessingConsented: value.gdprConsent === true
     };
   }
 
@@ -506,7 +510,8 @@ export class ShoppingBasketComponent implements OnInit, OnDestroy {
       lastName: '',
       phone: '',
       deliveryMethod: this.deliveryOptions[0].value,
-      deliveryAddress: ''
+      deliveryAddress: '',
+      gdprConsent: false
     });
     this.checkoutError = '';
     this.isSubmitting = false;

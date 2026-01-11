@@ -4,6 +4,7 @@ type HomePackage = {
   id: string;
   name: string;
   price: string;
+  oldPrice?: string;
   description: string;
   image?: string;
   imageAlt?: string;
@@ -22,7 +23,7 @@ export class HomeImageCardComponent {
     {
       id: 'home-lash-pack',
       name: 'Миглопластика вкъщи',
-      price: '69 лв',
+      price: '35 €',
       description: 'Всичко необходимо, за да направиш миглопластика вкъщи като професионалист.',
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_840,h_620,c_fill,q_auto,f_auto/v1761412142/Best_Lashes_Cover_Image_2_hlfykp.jpg',
       imageAlt: 'Комплект за миглопластика вкъщи',
@@ -32,7 +33,7 @@ export class HomeImageCardComponent {
     {
       id: 'promo-pack',
       name: 'Промо пакет',
-      price: '69 лв',
+      price: '35 €',
       description: 'Пълен комплект за магнетичен поглед + аксесоари за бързо приложение.',
       image: 'https://res.cloudinary.com/dl6dp2cr0/image/upload/w_840,h_620,c_fill,q_auto,f_auto/v1761412141/Best_Lashes_Cover_Image__oipyfg.jpg',
       imageAlt: 'Промо пакет Best Lashes BG',

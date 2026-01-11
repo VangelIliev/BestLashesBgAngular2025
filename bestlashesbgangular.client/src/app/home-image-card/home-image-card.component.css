@@ -47,6 +47,18 @@
   text-shadow: 0 10px 28px rgba(150, 32, 92, 0.15);
 }
 
+.home-packages__promo-banner {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #ff0000;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-top: 0.5rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
 .package-grid {
   position: relative;
   display: grid;
@@ -105,21 +117,35 @@
   text-transform: uppercase;
 }
 
-.package-card__price {
+.package-card__price-badge {
   position: absolute;
   top: -0.35rem;
   right: 0;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.45rem 1.05rem;
-  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  border-radius: 1rem;
   background: linear-gradient(135deg, #ff9bcd 0%, #f65bb0 100%);
   color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   box-shadow: 0 12px 26px rgba(246, 91, 176, 0.3);
+  line-height: 1.2;
+}
+
+.package-card__old-price {
+  font-size: 0.9rem;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.package-card__price {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 1.15rem;
 }
 
 .package-card__media {

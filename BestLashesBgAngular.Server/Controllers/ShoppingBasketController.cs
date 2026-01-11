@@ -46,7 +46,34 @@ namespace BestLashesBgAngular.Server.Controllers
                 return BadRequest("Възникна несъответствие в сумите на поръчката. Моля, опитайте отново.");
             }
 
-            var discount = Math.Clamp(model.DiscountValue, 0, subtotal);
+            var submittedCode = string.IsNullOrWhiteSpace(model.DiscountCode) ? null : model.DiscountCode.Trim();
+            var normalizedDiscountCode = submittedCode?.ToUpperInvariant();
+
+            var expectedDiscount = 0d;
+            if (!string.IsNullOrEmpty(normalizedDiscountCode))
+            {
+                if (normalizedDiscountCode == "CHRISTMAS10")
+                {
+                    expectedDiscount = Math.Round(subtotal * 0.10, 2);
+                }
+                else
+                {
+                    return BadRequest("Невалиден код за отстъпка.");
+                }
+            }
+
+            var discount = Math.Round(Math.Min(expectedDiscount, subtotal), 2);
+
+            if (discount > 0 && Math.Abs(model.DiscountValue - discount) > 0.5)
+            {
+                return BadRequest("Стойността на отстъпката не съвпада с активирания код.");
+            }
+
+            if (discount == 0 && model.DiscountValue > 0.5)
+            {
+                return BadRequest("Подадена е отстъпка без валиден код.");
+            }
+
             var total = Math.Round(subtotal - discount, 2);
 
             if (Math.Abs(total - model.Total) > 0.5)
@@ -66,7 +93,7 @@ namespace BestLashesBgAngular.Server.Controllers
                 model.Customer.DeliveryMethod,
                 model.Customer.DeliveryAddress);
 
-            var domainModel = MapToDomainModel(model, orderId, subtotal, discount, total);
+            var domainModel = MapToDomainModel(model, orderId, subtotal, discount, total, normalizedDiscountCode);
 
             try
             {
@@ -81,7 +108,7 @@ namespace BestLashesBgAngular.Server.Controllers
             return Ok(new { success = true, orderId });
         }
 
-        private static ShoppingBasketModel MapToDomainModel(ShoppingBasketViewModel viewModel, string orderId, double subtotal, double discount, double total)
+        private static ShoppingBasketModel MapToDomainModel(ShoppingBasketViewModel viewModel, string orderId, double subtotal, double discount, double total, string? normalizedDiscountCode)
         {
             return new ShoppingBasketModel
             {
@@ -92,7 +119,8 @@ namespace BestLashesBgAngular.Server.Controllers
                     LastName = viewModel.Customer.LastName,
                     PhoneNumber = viewModel.Customer.PhoneNumber,
                     DeliveryMethod = viewModel.Customer.DeliveryMethod,
-                    DeliveryAddress = viewModel.Customer.DeliveryAddress
+                    DeliveryAddress = viewModel.Customer.DeliveryAddress,
+                    IsDataProcessingConsented = viewModel.Customer.IsDataProcessingConsented
                 },
                 Items = viewModel.Items
                     .Select(item => new BasketItemModel
@@ -102,7 +130,7 @@ namespace BestLashesBgAngular.Server.Controllers
                         UnitPrice = item.Price
                     })
                     .ToList(),
-                DiscountCode = viewModel.DiscountCode,
+                DiscountCode = normalizedDiscountCode,
                 Subtotal = subtotal,
                 DiscountValue = discount,
                 Total = total

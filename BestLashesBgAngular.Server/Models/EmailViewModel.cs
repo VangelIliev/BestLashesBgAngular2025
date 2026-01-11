@@ -24,5 +24,8 @@ namespace BestLashesBgAngular.Server.Models
         [MinLength(6, ErrorMessage = "Моля, въведете подробен адрес." )]
         [MaxLength(250, ErrorMessage = "Адресът е твърде дълъг." )]
         public string DeliveryAddress { get; set; } = string.Empty;
+
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Моля, потвърдете съгласието за обработка на лични данни.")]
+        public bool IsDataProcessingConsented { get; set; }
     }
 }
